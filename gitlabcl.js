@@ -14,9 +14,36 @@ var request = request.defaults({
 });
 
 // GETリクエスト
-request.get({
+request({
+    method: "GET",
     url: "http://192.168.0.9/api/v4/version",
-}, function (error, response, body) {
+}, outResponse);
+
+request({
+    method: "GET",
+    url: "http://192.168.0.9/api/v4/namespaces",
+    qs: {
+        search: "gitlab-client-test"
+    }
+}, outResponse);
+
+// POSTリクエスト
+request({
+    method: "POST",
+    url: "http://192.168.0.9/api/v4/projects",
+    qs: {
+        name: "test-project",
+        namespace_id: "3",
+        description: "これはテストプロジェクト"
+    }
+}, outResponse);
+
+//
+//
+//
+function outResponse(error, response, body) {
+    console.log("----------");
+
     if (error) {
         console.log('Error: ' + error.message);
         return;
@@ -29,5 +56,4 @@ request.get({
 
     console.log('statusCode: ' + response.statusCode)
     console.log('body: ' + body);
-});
-
+}
