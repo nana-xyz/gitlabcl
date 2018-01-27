@@ -6,15 +6,16 @@
 // npm install request
 // 
 
-var webclient = require("request");
+var request = require("request");
+
+// HTTP通信のリクエストヘッダのデフォルトとしてGitLabのアクセストークンを設定する
+var request = request.defaults({
+    headers: { "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h" }
+  });
 
 // GETリクエスト
-webclient.get({
+request.get({
     url: "http://192.168.0.9/api/v4/version",
-    // HTTP 通信のリクエストヘッダを設定する
-    headers: {
-        "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h"
-    }
 }, function (error, response, body) {
     if (error) {
         console.log('Error: ' + error.message);
