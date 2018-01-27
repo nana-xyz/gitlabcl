@@ -11,7 +11,7 @@ var request = require("request");
 // HTTP通信のリクエストヘッダのデフォルトとしてGitLabのアクセストークンを設定する
 var request = request.defaults({
     headers: { "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h" }
-  });
+});
 
 // GETリクエスト
 request.get({
@@ -21,6 +21,13 @@ request.get({
         console.log('Error: ' + error.message);
         return;
     }
-    console.log(body);
+
+    console.log('headers:');
+    for (var key in response.headers) {
+        console.log('  ' + key + ': ' + response.headers[key]);
+    }
+
+    console.log('statusCode: ' + response.statusCode)
+    console.log('body: ' + body);
 });
 
