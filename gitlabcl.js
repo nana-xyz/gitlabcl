@@ -2,52 +2,61 @@
 // node.jsを使ってHTTP リクエストを発行する
 // 2018.1.27
 // 
-// node.js requestモジュールを下記コマンドで事前にインストールしておくこ
+// node.js モジュールを下記コマンドで事前にインストールしておくこと
 // npm install request
+// npm install sync-request
 // 
 
-var request = require("request");
+var request = require("sync-request");
 
 // HTTP通信のリクエストヘッダのデフォルトとしてGitLabのアクセストークンを設定する
-var request = request.defaults({
-    headers: { "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h" }
-});
+//var request = request.defaults({
+//    headers: { "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h" }
+//});
 
 // GETリクエスト
-request({
-    method: "GET",
-    url: "http://192.168.0.9/api/v4/version",
-}, outResponse);
+var response = request("GET", "http://192.168.0.9/api/v4/version", {
+    headers: {
+        "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h"
+    }
+});
 
-request({
-    method: "GET",
-    url: "http://192.168.0.9/api/v4/namespaces",
+outResponse(response);
+
+response = request("GET", "http://192.168.0.9/api/v4/namespaces", {
+    headers: {
+        "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h"
+    },
     qs: {
         search: "gitlab-client-test"
     }
-}, outResponse);
+});
+outResponse(response);
+
 
 // POSTリクエスト
-request({
-    method: "POST",
-    url: "http://192.168.0.9/api/v4/projects",
+response = request("POST", "http://192.168.0.9/api/v4/projects", {
+    headers: {
+        "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h"
+    },
     qs: {
         name: "test-project",
         namespace_id: "3",
         description: "これはテストプロジェクト"
     }
-}, outResponse);
+});
+outResponse(response);
 
 //
 //
 //
-function outResponse(error, response, body) {
+function outResponse(response) {
     console.log("----------");
 
-    if (error) {
-        console.log('Error: ' + error.message);
-        return;
-    }
+ //   if (error) {
+ //       console.log('Error: ' + error.message);
+ //       return;
+ //   }
 
     console.log('headers:');
     for (var key in response.headers) {
@@ -55,5 +64,5 @@ function outResponse(error, response, body) {
     }
 
     console.log('statusCode: ' + response.statusCode)
-    console.log('body: ' + body);
+    console.log('body: ' + response.body);
 }
