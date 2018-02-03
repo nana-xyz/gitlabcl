@@ -7,37 +7,43 @@
 // npm install sync-request
 // 
 
+// 環境定数
+const GTILAB_HOST = "192.168.0.14";
+const GTILAB_WEB_API = "http://" + GTILAB_HOST + "/api/v4/";
+const PRIVATE_TOKEN = "sUWrWstZcFDh5KQH176h";
+
 var request = require("sync-request");
 
 // HTTP通信のリクエストヘッダのデフォルトとしてGitLabのアクセストークンを設定する
 //var request = request.defaults({
-//    headers: { "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h" }
+//    headers: { "PRIVATE-TOKEN": PRIVATE_TOKEN }
 //});
 
 // GETリクエスト
-var response = request("GET", "http://192.168.0.9/api/v4/version", {
+var response = request("GET", GTILAB_WEB_API + "/version", {
     headers: {
-        "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h"
+        "PRIVATE-TOKEN": PRIVATE_TOKEN
     }
 });
 
 outResponse(response);
 
-response = request("GET", "http://192.168.0.9/api/v4/namespaces", {
+response = request("GET", GTILAB_WEB_API + "/groups", {
     headers: {
-        "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h"
+        "PRIVATE-TOKEN": PRIVATE_TOKEN
     },
-    qs: {
-        search: "gitlab-client-test"
-    }
+//    qs: {
+//       search: "gitlab-client-test"
+//    }
 });
 outResponse(response);
 
 
 // POSTリクエスト
-response = request("POST", "http://192.168.0.9/api/v4/projects", {
+/*
+response = request("POST", GTILAB_WEB_API + "/projects", {
     headers: {
-        "PRIVATE-TOKEN": "sUWrWstZcFDh5KQH176h"
+       "PRIVATE-TOKEN": PRIVATE_TOKEN
     },
     qs: {
         name: "test-project",
@@ -46,6 +52,7 @@ response = request("POST", "http://192.168.0.9/api/v4/projects", {
     }
 });
 outResponse(response);
+*/
 
 //
 //
