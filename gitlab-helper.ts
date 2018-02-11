@@ -1,4 +1,4 @@
-import { GitLabApi } from "./gitlab-api";
+import { GitLabApi } from "./gitlab/gitlab-api";
 import { Util } from "./util";
 
 /**
@@ -49,7 +49,7 @@ export class GitlabHelper extends GitLabApi {
      */
     printGroupList() {
         var groups = this.listGroups();
-        Util.outDebugConsole2(groups);
+        Util.printDebugConsole2(groups);
     }
 
 }
