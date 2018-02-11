@@ -1,4 +1,4 @@
-import { WebApi } from "./web-api";
+import { WebApi } from "../web-api/web-api";
 
 /**
  * GitLab WebAPIラッパークラスです。
