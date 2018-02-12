@@ -3,6 +3,8 @@ declare function require(x: string): any;
 
 import { GitlabHelper } from "./gitlab-helper";
 import { Util } from "./util";
+import { Project } from "./factory/project";
+import { PortalCreator } from "./factory/portal-creator";
 
 /**
  * 
@@ -34,7 +36,10 @@ class Main {
     constructor() {
         this.gitLabHelper = new GitlabHelper(Main.GTILAB_HOST, Main.GTILAB_PERSONAL_ACCESS_TOKEN);
         this.readlineSync = require('readline-sync');
+
+        this.prologue();
         this.run();
+        this.epilogue();
     }
 
     /**
@@ -42,17 +47,14 @@ class Main {
      * コンストラクタから呼ばれます。
      */
     private run() {
-        this.prologue();
 
-        var projects = [
-            { "name": "project1", "id": "9", "desc": "サブグループ1 - プロジェクト1" },
-            { "name": "project2", "id": "9", "desc": "サブグループ2 - プロジェクト1" },
-            { "name": "project3", "id": "9", "desc": "サブグループ3 - プロジェクト1" },
-        ];
+        // グループリトをコンソールへ出力
+        //this.gitLabHelper.printGroupList();
 
-        var subgroup = this.gitLabHelper.searchForGroup("sub-doc");
-        console.log(subgroup.length);
-        Util.outDebugConsole2(subgroup);
+        var factory = new PortalCreator();
+        var projects: Project[] = factory.create("free", "自由");
+
+        Util.printDebugConsole2(projects);
 
         if (!this.readlineSync.keyInYN("続行しますか?")) {
             return;
@@ -67,7 +69,7 @@ class Main {
         var version = this.gitLabHelper.version();
 
         console.log();
-        console.log("***** " + new Date()+ " ***** ");
+        console.log("***** " + new Date() + " ***** ");
         console.log("***** GitLab Ver." + version["version"]);
         console.log("*****        Rev." + version["revision"]);
     }
@@ -75,11 +77,10 @@ class Main {
     /**
      * 後処理です。
      */
-    epilogue() {
+    private epilogue() {
         console.log("***** " + new Date() + " ***** ");
         console.log("");
     }
 }
 
 const main = new Main();
-main.epilogue();
