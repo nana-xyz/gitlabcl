@@ -47,12 +47,16 @@ class Main {
      * コンストラクタから呼ばれます。
      */
     private run() {
+        // ①下記呼び出しで、グループリトをコンソールへ出力して、グループまたはサブグループのIDを調べる
+        // this.gitLabHelper.printGroupList();
 
-        // グループリトをコンソールへ出力
-        //this.gitLabHelper.printGroupList();
+        // ②上記で調べたグループまたはサブグループのIDで、Factoryクラス(XCreator)を作成
 
+        // ③該当するFactoryクラス(XCreator)を生成
         var factory = new PortalCreator();
-        var projects: Project[] = factory.create("free", "自由");
+
+        // ④プロジェクト名とプロジェクトの説明を引数にcreateを呼び出す
+        var projects: Project[] = factory.create("free1", "自由1");
 
         Util.printDebugConsole2(projects);
 
@@ -60,6 +64,7 @@ class Main {
             return;
         }
 
+        this.gitLabHelper.createProjectList(projects);
     }
 
     /**

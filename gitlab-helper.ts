@@ -1,5 +1,6 @@
 import { GitLabApi } from "./gitlab/gitlab-api";
 import { Util } from "./util";
+import { Project } from "./factory/project";
 
 /**
  * GitLabApiクラスに本ツール特有の機能を追加したクラスです。
@@ -17,7 +18,7 @@ export class GitlabHelper extends GitLabApi {
      * 引数で与えたプロジェクト リストをデバッグ コンソールへ出力します。
      * @param projects プロジェクト(name,id,desc)一覧
      */
-    printProjectList(projects: any) {
+    printProjectList(projects: Project[]) {
         for (var i in projects) {
             var project = projects[i]
             console.log(project.name + " " + project.id + " " + project.desc);
@@ -25,10 +26,10 @@ export class GitlabHelper extends GitLabApi {
     }
 
     /**
-     * 引数で与えたプロジェクト リストをGitLabで生成します。
+     * 引数で与えたプロジェクトのリストをGitLabで生成します。
      * @param projects プロジェクト(name,id,desc)一覧
      */
-    createProjectList(projects: any) {
+    createProjectList(projects: Project[]) {
         for (var i in projects) {
             var project = projects[i]
             this.createProject(project);
@@ -40,7 +41,7 @@ export class GitlabHelper extends GitLabApi {
      * 引数で与えたプロジェクトをGitLabで生成します。
      * @param project プロジェクト(name,id,desc)
      */
-    createProject(project: any) {
+    createProject(project: Project) {
         this.createPorject(project.name, project.id, project.desc);
     }
 
