@@ -38,8 +38,15 @@ class Main {
         this.readlineSync = require('readline-sync');
 
         this.prologue();
-        this.run();
+        this.createProjectsInGroup();
         this.epilogue();
+    }
+
+    /**
+     * グループリトをコンソールへ出力します。
+     */
+    private printGroupList() {
+        this.gitLabHelper.printGroupList();
     }
 
     /**
@@ -63,6 +70,19 @@ class Main {
         if (!this.readlineSync.keyInYN("続行しますか?")) {
             return;
         }
+
+        this.gitLabHelper.createProjectList(projects);
+    }
+
+    /**
+     * 1つのサブグループにスクッスのプロジェクトを生成します。
+     */
+    private createProjectsInGroup() {
+        var projects: Project[] = [
+            new Project("porj1", "6", "テスト / ドキュメント / プロジェクト1"),
+            new Project("proj2", "6", "テスト / ドキュメント / プロジェクト2"),
+            new Project("proj3", "6", "テスト / ドキュメント / プロジェクト3"),
+        ]
 
         this.gitLabHelper.createProjectList(projects);
     }
